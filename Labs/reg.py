@@ -17,6 +17,7 @@ count = 0
 for line in Lines:
     count += 1
     print("Line{}: {}".format(count, line.strip()))
+
 tests = [["(a.b|b*)", ["ab", "b", "bb", "a"]],
          ["a.(b.b)*.a", ["aa", "abba", "aba"]],
          ["1.(0.0)*.1", ["11", "100001", "11001"]]]

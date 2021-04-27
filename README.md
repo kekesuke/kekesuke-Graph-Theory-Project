@@ -1,13 +1,12 @@
 # kekesuke-Graph-Theory-Project
+G00375200
 
-# A description of your repository and its contents pitched at a knowledgeable outsider.
-Project Statement
-
+# Project description
 This project is about a program  which is written in the Python 3. The program  is with functionality to search in a text file using a regular expression. The program has few algorithms which are adapted from psudo code from wiki. The two of the algirthms used in this program are: 
 -Shunting Yard Algorithm is used to converts an Infix Expression to a Postfix Expression using a stack that holds operators.
 -Thompson's Construction is used to convert a Postfix Expression into a Non-deterministic Finite Automata. These NFAs can be used to match strings against Regular Expressions.
 
-# Instructions stating how to run and test your program. How to Run the Project:
+# How to Run and test the Project:
 
 Requirements needed to run the project:
 -Git
@@ -23,6 +22,10 @@ $ python3 RegEx.py
 
 
 # An explanation of your algorithm.
+1. Read content from file
+2. Read line by line
+3. After reading the line get the regular expression and convert it from infix to postfix using shunting yard algorithm
+4. After converting the regex to postfix run in through tompson construction and create NFA's
 
 
 1. What is a regular expression?
@@ -36,7 +39,7 @@ Special Characters
 
 . concatenates two characters. So, a.b means an a followed by a b
 
-* (Kleene Star)  
+'*' (Kleene Star) 
 0* means a character appears 0 or more times
 
 1* means a character appears 1 or more times
@@ -52,4 +55,5 @@ $ matches end of the input
 ^ matches the start of the input
 
 2. How do regular expressions differ across implementations?
+
 3. Can all formal languages be encoded as regular expressions?
