@@ -1,21 +1,5 @@
-L = ["Test1\n", "for\n", "Test2\n"]
-
-# writing to file
-file1 = open('myfile.txt', 'w')
-file1.writelines(L)
-file1.close()
-
-# Using readlines()
-file1 = open('myfile.txt', 'r')
-Lines = file1.readlines()
-
-count = 0
-# Strips the newline character
-for line in Lines:
-    count += 1
-    print("Line{}: {}".format(count, line.strip()))
-
 # Shunting yard algorithm for regular expressions
+import os
 
 
 def shunt(infix):
@@ -61,19 +45,8 @@ def shunt(infix):
         stack = stack[:-1]
     return postfix
 
-
-# if __name__ == "__main___":
-#     print("test")
-#     for infix in ["3+4*(2-1)", "1+2+3+4+5*6", "(1+2)*(4*(6-7))"]:
-#         print(f"infix:    {infix}")
-#         print(f"postfix:  {shunt(infix)}")
-#         print()
-
-# for infix in ["a.(b.b)*.a", "1.(0.0)*.1"]:
-#     print(f"infix:    {infix}")
-#     print(f"postfix:  {shunt(infix)}")
-#     print()
 # Thompson's contruction
+
 
 class State:
     """A state and its arrows in Thompson construction"""
@@ -216,24 +189,48 @@ def re_to_nfa(postfix):
         return stack[0]
 
 
-# for postfix in ["abb.*.a.", "100.*.1.", 'ab|']:
-#     print(f"postfix:    {postfix}")
-#     print(f"NFA:  {re_to_nfa(postfix)}")
-#     print()
+# Ask user to insert 1 for manuel and 2 for hard coded test
+userChoice = int(
+    input("Please enter or 1 for manuel or 2 for Hard coded test "))
+# checking if the user select manuel test so he can import their own regular expression and file to search in
+if userChoice == 1:
+    print("Please enter file with directory link for e.g  'C:\\Users\\test1\\repo\\project\\regexfile.txt'")
+    # getting filepath from the user
+    filePath = input(
+        "or regexfile.txt if it's in the same folder with RegEx.py file: ")
+    # checking if the path exist
+    assert os.path.exists(
+        filePath), "I did not find the file at, "+str(filePath)
+    count = 0
+    regexUser = input(
+        "Please insert regular expression for eg (a.b|b*): ")
+    with open(filePath, 'r') as f:
+        for line in f:
+            count += 1
+            for word in line.split():
+                postfix = shunt(regexUser)
+                nfa = re_to_nfa(postfix)
+                match = nfa.match(word)
+                if match:
+                    print(f"Match: '{word}': {match}")
+                else:
+                    print(f"Doesn't Match: '{word}': {match}")
 
-
-tests = [["(a.b|b*)", ["ab", "b", "bb", "a"]],
-         ["a.(b.b)*.a", ["aa", "abba", "aba"]],
-         ["1.(0.0)*.1", ["11", "100001", "11001"]]]
-
-for test in tests:
-    infix = test[0]
-    print(f"infix:    {infix}")
-    postfix = shunt(infix)
-    print(f"postfix:  {postfix}")
-    nfa = re_to_nfa(postfix)
-    print(f"thompson:  {nfa}")
-    for s in test[1]:
-        match = nfa.match(s)
-        print(f"Match: '{s}': {match}")
-    print()
+    # Close file
+    f.close()
+# checking if the user select automatic test with has all the values hard coded
+elif userChoice == 2:
+    tests = [["(a.b|b*)", ["ab", "b", "bb", "a"]],
+             ["a.(b.b)*.a", ["aa", "abba", "aba"]],
+             ["1.(0.0)*.1", ["11", "100001", "11001"]]]
+    for test in tests:
+        infix = test[0]
+        print(f"infix:    {infix}")
+        postfix = shunt(infix)
+        print(f"postfix:  {postfix}")
+        nfa = re_to_nfa(postfix)
+        print(f"thompson:  {nfa}")
+        for s in test[1]:
+            match = nfa.match(s)
+            print(f"Match: '{s}': {match}")
+        print()
